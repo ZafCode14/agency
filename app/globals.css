@@ -2,32 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+h1 {
+  font-size: 56px;
+}
+h2 {
+  font-size: 48px;
+}
+h3 {
+  font-size: 40px;
+}
+h4 {
+  font-size: 32px;
+}
+h5 {
+  font-size: 28px;
+}
+h6 {
+  font-size: 24px;
+}
+p {
+ font-size: 16px;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.bg-gradient-2 {
+  background: linear-gradient(to right, #2c126d 0%, #471cb4 50%, #721a68 100%);
+  animation: gradient 5s linear infinite;
+  background-size: 1000% auto;
+}
+.bg-gradient-1 {
+  background: linear-gradient(90deg, #180033 10%, rgb(6, 25, 61) 70%, #180033  90%);
+  animation: gradient 10s ease infinite;
+  background-size: 300% auto;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.text-color {
+  color: transparent;
+  background-image: linear-gradient(to right, #6A2EFF 20%, #ED1FD6 50%, #6A2EFF 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: gradient 10s linear infinite;
+  background-size: 300% auto;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
 }

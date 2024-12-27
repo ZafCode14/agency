@@ -1,5 +1,13 @@
 import type { Config } from "tailwindcss";
 
+const generateSizes = (maxSize: number) => {
+  const sizes: { [key: string]: string } = {};
+  for (let i = 1; i <= maxSize; i++) {
+    sizes[`${i * 0.25}`] = `${i * 0.25}rem`;
+  }
+  return sizes;
+};
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,13 +16,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+      width: generateSizes(800),  // 2000px / 4 = 500 rem units
+      height: generateSizes(800),
+      maxWidth: generateSizes(800),
     },
   },
   plugins: [],
 };
+
 export default config;
