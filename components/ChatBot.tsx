@@ -121,7 +121,7 @@ export default function Chat() {
           relative
           flex flex-col justify-end 
         bg-[white] border-l border-[#c7c7c7]
-          w-[400px] max-w-full
+          w-[450px] max-w-full
         `}>
 
           {/** Chat header Container */}
