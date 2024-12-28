@@ -3,6 +3,7 @@ import ButtonOne from "@/components/ButtonOne";
 const ContactSection= () => {
     return (
       <section id="contactSection" className={`
+        relative
         text-gray-50 
         w-[1200px] max-w-full
       `} style={{

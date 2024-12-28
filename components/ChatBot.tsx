@@ -79,6 +79,19 @@ export default function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Disable scrolling when chat is open
+  useEffect(() => {
+    if (showChat) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showChat]);
+
   return (
     <div className={`flex items-end z-30`}>
       {/** Show Hide Chat button */}
