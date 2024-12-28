@@ -127,7 +127,7 @@ export default function Chat() {
         w-full max-w-full
         flex justify-end 
         transition-all duration-300
-        h-screen z-20
+        min-h-[100dvh] z-20
       `}>
         {/** Chat Container */}
         <div onClick={(e) => e.stopPropagation()} className={`
