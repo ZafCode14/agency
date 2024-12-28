@@ -4,7 +4,7 @@ const ProjectsSection = () => {
       sticky top-[70px]
       w-[1200px] max-w-full
     `}>
-        <div className={`w-full flex flex-col items-center bg-[#2a6077ab] backdrop-blur-md rounded-t-[30px] h-screen absolute`} style={{
+        <div className={`w-full flex flex-col items-center bg-[#2a6077ab] backdrop-blur-md rounded-t-[30px] h-[100dvh] absolute`} style={{
           WebkitBackdropFilter: 'blur(20px)', 
           backdropFilter: 'blur(20px)'
         }}>

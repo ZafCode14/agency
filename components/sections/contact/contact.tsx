@@ -7,7 +7,7 @@ const ContactSection= () => {
         text-gray-50 
         w-[1200px] max-w-full
       `} style={{
-        height: "calc(100vh - 70px)"
+        height: "calc(100dvh - 70px)"
       }}>
           <div className={`
             rounded-t-[30px]
