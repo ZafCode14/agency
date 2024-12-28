@@ -44,7 +44,10 @@ const Project = ({ name, description }: Props) => {
         <h6 className={`text-[white] uppercase font-bold`}>{name}</h6>
       </header>
 
-      <div className={`flex-1 bg-[#3d5864b7] text-white w-full flex flex-col lg:flex-row backdrop-blur-md`}>
+      <div className={`flex-1 bg-[#3d5864b7] text-white w-full flex flex-col lg:flex-row backdrop-blur-md`} style={{
+          WebkitBackdropFilter: 'blur(20px)', 
+          backdropFilter: 'blur(20px)'
+        }}>
         {/** Project Images */}
         <div
           className={`

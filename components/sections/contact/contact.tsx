@@ -14,7 +14,10 @@ const ContactSection= () => {
             w-full h-[80vh]
             flex flex-col items-center right-0 px-3
           bg-[#421e7f9c] backdrop-blur-md
-          `}>
+          `} style={{
+          WebkitBackdropFilter: 'blur(20px)', 
+          backdropFilter: 'blur(20px)'
+        }}>
             <h2 className="font-bold text-[32px] mb-5 mt-10 text-white">Contact</h2>
             <div className="flex justify-center items-center w-full">
               <form className={`

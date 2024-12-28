@@ -186,7 +186,7 @@ export default function Chat() {
               value={value}
               onChange={onChange}
               placeholder="Enter question here"
-              className="rounded-full px-3 py-2 flex-1 bg-[#404463]"
+              className="rounded-full px-3 py-2 flex-1 bg-[#404463] text-[white]"
             />
             <button
               className="text-[white] w-[40px] h-[40px] flex justify-center items-center ml-3"
