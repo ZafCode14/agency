@@ -147,7 +147,7 @@ export default function Chat() {
           </div>
 
           {/** Messeges container */}
-          <div className="w-full px-5 flex flex-col items-center flex-grow overflow-y-auto pt-2 bg-[#dadaeb] mt-[70px]">
+          <div onClick={(e) => e.stopPropagation()} className="w-full px-5 flex flex-col items-center flex-grow overflow-y-auto pt-2 bg-[#dadaeb] mt-[70px] h-[0]">
             { /** Loop throught the Messages */
             messages.map((message, index) => (
               <div 

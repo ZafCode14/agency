@@ -11,7 +11,7 @@ const ServicesSection = () => {
       flex items-start
       bg-[#ffffffea] text-gray-50
       px-3 w-[1200px] max-w-full pt-24
-      rounded-t-[30px] h-[100dvh]
+      rounded-t-[30px] h-screen
       overflow-hidden backdrop-blur-md
     `}>
       <div className={`w-full flex flex-col items-center justify-center right-0`}>
