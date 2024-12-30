@@ -4,33 +4,33 @@ import { useState } from "react";
 
 interface Props {
   name: string;
-  description: string
+  description: string;
 }
 
 const Project = ({ name, description }: Props) => {
   const [count, setCount] = useState(0);
 
   const handleNext = () => {
-    setCount(prev => prev === 3 ? prev = 0 : prev + 1)
-  }
+    setCount((prev) => (prev === 3 ? 0 : prev + 1));
+  };
 
   const handlePrev = () => {
-    setCount(prev => prev === 0 ? prev = 3 : prev - 1)
-  }
+    setCount((prev) => (prev === 0 ? 3 : prev - 1));
+  };
 
   return (
     <div
       className={`
         sticky top-[170px]
         flex flex-col
-        w-[1100px] max-w-[90%] mb-48 rounded-lg overflow-hidden
+        w-[900px] max-w-[90%] mb-32 rounded-lg overflow-hidden
       `}
     >
       {/** Project Header */}
       <header
         className={`
           relative
-          w-full h-[70px] bg-[black]
+          w-full h-[70px] bg-[#2A6987]
           flex items-center justify-center
         `}
       >
@@ -44,16 +44,20 @@ const Project = ({ name, description }: Props) => {
         <h6 className={`text-[white] uppercase font-bold`}>{name}</h6>
       </header>
 
-      <div className={`flex-1 bg-[#3d5864b7] text-white w-full flex flex-col lg:flex-row backdrop-blur-md`} style={{
-          WebkitBackdropFilter: 'blur(20px)', 
-          backdropFilter: 'blur(20px)'
-        }}>
+      <div
+        className={`
+          flex-1 bg-[#0A1B24] text-white w-full flex flex-col backdrop-blur-md`}
+        style={{
+          WebkitBackdropFilter: "blur(20px)",
+          backdropFilter: "blur(20px)",
+        }}
+      >
         {/** Project Images */}
         <div
           className={`
             relative
             flex overflow-hidden items-center
-            bg-[black] lg:w-[80%]
+            bg-[#1B2A3A]
           `}
         >
           {Array(4)
@@ -63,6 +67,7 @@ const Project = ({ name, description }: Props) => {
                 key={index}
                 src={`/images/${name}/${index + 1}.png`}
                 alt="project Image"
+                loading="lazy"
                 width={2000}
                 height={1000}
                 style={{
@@ -71,30 +76,42 @@ const Project = ({ name, description }: Props) => {
                 className={`
                   object-contain 
                   transition-transform duration-300
-                  flex-shrink-0 w-full
+                  flex-shrink-1 w-full
                 `}
               />
             ))}
-            <div onClick={handleNext} className={`
-              absolute right-5
-              flex justify-center items-center
-              bg-[#ffffff91] hover:bg-[#ffffffec] text-[black]
-              rounded-full w-[30px] h-[30px]
-              font-bold cursor-pointer
-            `}>&gt;</div>
-            <div onClick={handlePrev} className={`
-              absolute left-5
-              flex justify-center items-center
-              bg-[#ffffff91] hover:bg-[#ffffffec] text-[black]
-              rounded-full w-[30px] h-[30px]
-              font-bold cursor-pointer
-            `}>&lt;</div>
+            <div
+              onClick={handleNext}
+              className={`
+                absolute right-5
+                flex justify-center items-center
+                bg-[#00A0A6] hover:bg-[#00C4C9] text-[white]
+                rounded-full w-[30px] h-[30px]
+                font-bold cursor-pointer
+              `}
+            >
+              &gt;
+            </div>
+            <div
+              onClick={handlePrev}
+              className={`
+                absolute left-5
+                flex justify-center items-center
+                bg-[#00A0A6] hover:bg-[#00C4C9] text-[white]
+                rounded-full w-[30px] h-[30px]
+                font-bold cursor-pointer
+              `}
+            >
+              &lt;
+            </div>
         </div>
 
         {/** Project Description */}
         <p
-          className={`p-5 text-center leading-[16px] flex items-center lg:w-[20%]`}
-        >{description}</p>
+          className={`p-5 text-center leading-[16px] flex items-center text-[#E0F2F1]`}
+        >
+          {description}
+        </p>
       </div>
     </div>
   );

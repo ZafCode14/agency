@@ -6,7 +6,7 @@ function Header() {
       fixed top-0 z-10
       flex justify-center 
       w-full h-[70px]
-      text-black bg-[#ffffff7c]
+      text-black bg-[#ffffff]
       transition-colors duration-300
       px-3
     `}>

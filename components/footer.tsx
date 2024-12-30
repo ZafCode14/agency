@@ -3,7 +3,6 @@ import Image from "next/image";
 function Footer() {
   return (
     <footer className={`
-      absolute bottom-0
       flex justify-center
       w-full h-[30vh]
       bg-[#050538] text-white

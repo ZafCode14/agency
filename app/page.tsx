@@ -3,6 +3,7 @@ import ServicesSection from "@/components/sections/services/services";
 import ProjectsSection from "@/components/sections/projects/projects";
 import ContactSection from "@/components/sections/contact/contact";
 import Project from "@/components/sections/projects/project";
+import TestimonialsSection from "@/components/sections/testimonials/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -46,6 +47,7 @@ export default function Home() {
       />
       <div className="h-[100px]"></div>
       <ContactSection/>
+      <TestimonialsSection/>
     </main>
   );
 }

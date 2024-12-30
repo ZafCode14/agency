@@ -23,7 +23,7 @@ export default function Chat() {
   const [newMessage, setNewMessage] = useState<number>(1);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setValue(e.target.value);
 
   const handleSubmit = async () => {
@@ -35,7 +35,7 @@ export default function Chat() {
       // Add the user's message to the state
       setMessages((prevMessages) => [
         ...prevMessages,
-        { role: "user", content: value, createdAt: Date.now() },
+        { role: "user", content: formatResponse(value), createdAt: Date.now() },
       ]);
       setValue("");
 
@@ -133,7 +133,7 @@ export default function Chat() {
         <div onClick={(e) => e.stopPropagation()} className={`
           relative
           flex flex-col justify-end 
-        bg-[white] border-l border-[#c7c7c7]
+        bg-[white]
           w-[450px] max-w-full
         `}>
 
@@ -181,12 +181,11 @@ export default function Chat() {
           <form 
           onSubmit={(e) => {e.preventDefault(); handleSubmit()}}
           className="flex w-full px-3 bg-[#20203a] border-t border-[#161744] py-4">
-            <input
-              type="text"
+            <textarea
               value={value}
               onChange={onChange}
               placeholder="Enter question here"
-              className="rounded-full px-3 py-2 flex-1 bg-[#404463] text-[white]"
+              className="rounded-[10px] px-3 pt-2 min-h-[40px] flex-1 bg-[#404463] text-[white] flex items-center max-h-[100px]"
             />
             <button
               className="text-[white] w-[40px] h-[40px] flex justify-center items-center ml-3"

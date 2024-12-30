@@ -28,16 +28,35 @@ p {
  font-size: 16px;
 }
 
-.bg-gradient-2 {
-  background: linear-gradient(to right, #2c126d 0%, #471cb4 50%, #721a68 100%);
-  animation: gradient 5s linear infinite;
-  background-size: 1000% auto;
-}
 .bg-gradient-1 {
-  background: linear-gradient(90deg, #180033 10%, rgb(6, 25, 61) 70%, #180033  90%);
+  background: linear-gradient(90deg, #2A6987 10%, #88137B 70%, #151727 90%);
   animation: gradient 10s ease infinite;
   background-size: 300% auto;
 }
+
+.bg-gradient-2 {
+  background: linear-gradient(90deg, #151727 10%, #2A6987 70%, #88137B 90%);
+  animation: gradient 10s ease infinite;
+  background-size: 300% auto;
+}
+
+.bg-gradient-3 {
+  background: linear-gradient(90deg, #88137B 10%, #2A6987 70%, #151727 90%);
+  animation: gradient 10s ease infinite;
+  background-size: 300% auto;
+}
+
+.bg-gradient-4 {
+  background: linear-gradient(90deg, #2A6987 10%, #151727 70%, #88137B 90%);
+  animation: gradient 10s ease infinite;
+  background-size: 300% auto;
+}
+.bg-gradient-5 {
+  background: linear-gradient(90deg, #1F405E 10%, #0D0E15 70%, #4A164C 90%);
+  animation: gradient 10s ease infinite;
+  background-size: 300% auto;
+}
+
 
 .text-color {
   color: transparent;

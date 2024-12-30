@@ -8,9 +8,17 @@ type Message = {
   role: "user" | "assistant" | "system";
   content: string;
 };
+type ToolCall = {
+  function: {
+    name: string;
+    arguments: string;
+  };
+};
 
-
-export async function askQuestion(question: string, conversationHistory: Message[]) {
+export async function askQuestion(
+  question: string,
+  conversationHistory: Message[]
+) {
   if (!question) {
     throw new Error("Question is required.");
   }
@@ -21,21 +29,12 @@ export async function askQuestion(question: string, conversationHistory: Message
         {
           role: "system",
           content: `
-          You are Alex, a knowledgeable customer support assistant for a development agency specializing in web and app solutions. You are a chat on our website. Your role is to engage with customers in a helpful and approachable manner, assisting them in understanding their needs. Always steer the conversation toward our agency's services, offering to guide them through the process of filling out a form on our website for further inquiries or consultations. The contact form can be found on the main page by clicking on the 'Contact' button in the header navigation bar.
+            You are Alex, a knowledgeable customer support assistant for a development agency specializing in web and app solutions. 
 
-          Our main services include:
+            Your role is to engage with customers, understand their needs, and use the available tools to assist them. 
 
-          UI/UX Design
-          Responsive Web Design
-          Custom Web Development
-          Mobile App Development (iOS & Android)
-          Cross-Platform App Development
-          SEO Services
-          CMS Services
-          Maintenance and Support
-
-          Ensure that you stay on topic, focusing on the agency's offerings, and aim to convert inquiries into potential leads by showcasing our expertise in delivering tailored web and app development solutions. Don't answer unrelated topics instead steer back to the agency.
-          `
+            Always aim to guide users toward using the agency's services. Send information only when the user confirms the correctness of their data.
+          `,
         },
         ...conversationHistory,
         {
@@ -45,7 +44,46 @@ export async function askQuestion(question: string, conversationHistory: Message
       ],
       model: "gpt-4o-mini",
       max_tokens: 300,
+      tools: [
+        {
+          type: "function",
+          function: {
+            name: "sendToDeveloper",
+            parameters: {
+              type: "object",
+              properties: {
+                name: { type: "string" },
+                email: { type: "string" },
+                requirements: { type: "string" },
+                budget: {type: "string"},
+              },
+              required: ["name", "email", "requirements"],
+            },
+          },
+        },
+      ],
     });
+
+    // Check if tool call exists
+    const toolCalls:ToolCall[] = response.choices[0]?.message.tool_calls || [];
+
+    if (toolCalls.length > 0) {
+      for (const toolCall of toolCalls) {
+        console.log()
+        if (toolCall.function.name === "sendToDeveloper") {
+          const { name, email, requirements, budget } = JSON.parse(toolCall.function.arguments);
+
+          // Log the user details
+          console.log("User Info:", { name, email, requirements, budget });
+
+          return `Your information has been successfully shared with our development team.
+          They will review your requirements and reach out to you shortly.
+
+          If there’s anything else we can assist you with in the meantime, please let us know.
+          `;
+        }
+      }
+    }
 
     return response.choices[0]?.message?.content || "No response received.";
   } catch (error) {
