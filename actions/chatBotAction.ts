@@ -1,5 +1,6 @@
 "use server";
 import OpenAI from "openai";
+import { sendMessageToTelegram } from "./telegramAction";
 
 const apiKey = process.env.OPEN_AI_KEY;
 const openai = new OpenAI({ apiKey });
@@ -34,6 +35,8 @@ export async function askQuestion(
             Your role is to engage with customers, understand their needs, and use the available tools to assist them. 
 
             Always aim to guide users toward using the agency's services. Send information only when the user confirms the correctness of their data.
+
+            Make sure the currancy of the budget is specified
           `,
         },
         ...conversationHistory,
@@ -75,6 +78,17 @@ export async function askQuestion(
 
           // Log the user details
           console.log("User Info:", { name, email, requirements, budget });
+
+          const telegramMessage = 
+`New Developer Request:
+  Name: ${name}
+  Email: ${email}
+  Requirements: ${requirements}
+  Budget: ${budget || "Not provided"}
+`;
+
+          // send message to telegram
+          await sendMessageToTelegram(telegramMessage);
 
           return `Your information has been successfully shared with our development team.
           They will review your requirements and reach out to you shortly.
