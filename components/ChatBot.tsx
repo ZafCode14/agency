@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { askQuestion } from "@/actions/chatBotAction";
 import Image from "next/image";
+import { userInput } from "@/actions/chatBotAction";
 
 type Message = {
   role: "user" | "assistant" | "system";
@@ -13,7 +13,10 @@ export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi there! How can I assist you?",
+      content: `Hi there! 👋 I'm Alex. How can I help with your web or app development needs today?
+
+Feel free to share your project details, and I'll guide you from there! 😊
+      `,
       createdAt: Date.now()
     },
   ]);
@@ -40,7 +43,7 @@ export default function Chat() {
       setValue("");
 
       // Get the chatbot's response
-      const result = await askQuestion(value, messages);
+      const result = await userInput(value, messages);
 
       const formattedResponse: Message = {
         role: "assistant",

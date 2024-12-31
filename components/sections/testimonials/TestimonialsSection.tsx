@@ -1,65 +1,13 @@
-"use client"
-import { useEffect, useState } from 'react';
+import Testimonials from './Testimonials';
 
 export default function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const testimonials = [
-    {
-      text: 'This service has been a game changer for us. Highly recommend!',
-      name: 'John Doe',
-      position: 'CEO of Company XYZ',
-      color: '#1F405E', // Dark teal
-    },
-    {
-      text: 'A truly professional team that delivers results beyond expectations.',
-      name: 'Jane Smith',
-      position: 'Marketing Director at Brand ABC',
-      color: '#0D0E15', // Very dark grayish-black
-    },
-    {
-      text: 'Amazing experience! The team was efficient and responsive every step of the way.',
-      name: 'Michael Brown',
-      position: 'Lead Developer at Tech Solutions',
-      color: '#4A164C', // Deep plum
-    },
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 3000); // Change testimonial every 3 seconds
-
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <section className="relative w-[1200px] max-w-full h-screen bg-gradient-to-b from-[#0D0E15] to-[#1F405E]">
       <div className="absolute top-0 left-0 w-full h-full bg-opacity-80 flex items-center justify-center text-white">
         <div className="text-center p-8 w-full">
           <h2 className="text-[32px] font-semibold mb-6">What Our Clients Say</h2>
           <div className="relative w-full overflow-hidden">
-            <div
-              className="flex transition-transform duration-1000 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="testimonial-item w-full flex-shrink-0 p-8"
-                  style={{
-                    backgroundColor: testimonial.color,
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
-                  }}
-                >
-                  <p className="text-xl italic">{testimonial.text}</p>
-                  <p className="mt-4 font-bold">{testimonial.name}</p>
-                  <p className="text-lg">{testimonial.position}</p>
-                </div>
-              ))}
-            </div>
+            <Testimonials/>
           </div>
         </div>
       </div>
