@@ -142,6 +142,10 @@ async function handleCreateProject(toolCall: ToolCall) {
   // Get the estimated price based on the requirements
   const estimatedPrice = await getPrice(req);
 
+  const totalPrice = estimatedPrice.split(" ").pop();
+  const estimatedTime = estimatedPrice.split("|")[0];
+
+  // Send message to Telegram
   // Prepare the message for Telegram
   const telegramMessage = `
 New Project Request:
@@ -152,20 +156,18 @@ New Project Request:
   Estimated Price: ${estimatedPrice}
 `;
 
-  // Extract the total price
-  const totalPrice = estimatedPrice.split(" ").pop();
-
-  // Send message to Telegram
   await sendMessageToTelegram(telegramMessage);
 
-  return `Your information has been successfully shared with our development team.
+  return `Thank you for sharing your project details with our development team!
 
-Based on the provided project requirements, your estimated price is: ${totalPrice?.slice(0, -1)}.
+  Here’s an overview based on your provided requirements:
+  1. **Estimated Price**: ${totalPrice?.slice(0, -1)}.
+  2. **Estimated Time**: ${estimatedTime?.slice(0, -1)}.
 
-The team will review your requirements and reach out to you shortly.
+  Our team will review your requirements and get in touch with you shortly.  
 
-If there’s anything else we can assist you with in the meantime, please don't hesitate to let us know.
-`;
+  In the meantime, if there’s anything else we can assist you with, please don’t hesitate to let us know.`;
+
 }
 
 // Function to handle the contact developer request

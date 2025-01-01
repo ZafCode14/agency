@@ -56,6 +56,11 @@ p {
   animation: gradient 10s ease infinite;
   background-size: 300% auto;
 }
+.bg-gradient-6 {
+  background: linear-gradient(90deg, #bb16a8 10%, #2b93c4 70%, #c012ac 90%);
+  animation: gradient 10s ease infinite;
+  background-size: 300% auto;
+}
 
 
 .text-color {

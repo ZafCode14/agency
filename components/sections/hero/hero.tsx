@@ -25,7 +25,7 @@ const HeroSection = () => {
       <div className={`
         absolute
         w-full h-full
-        bg-[#00000080]
+        bg-[#0000004f]
       `}></div>
 
       <div className={`

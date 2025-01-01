@@ -103,15 +103,21 @@ Feel free to share your project details, and I'll guide you from there! 😊
           fixed bottom-10 right-10
           flex justify-center items-center
           w-[50px] h-[50px] rounded-full
-          bg-[#519add] p-1
+          bg-gradient-6
         `}>
-          <Image
-            alt="chat logo"
-            src="/icons/chat.svg"
-            width={0}
-            height={0}
-            className="w-full h-full"
-          />
+          <div className={`
+            flex justify-center items-center
+            w-[45px] h-[45px] rounded-full
+          bg-[#050322] p-1
+          `}>
+            <Image
+              alt="chat logo"
+              src="/icons/chat.svg"
+              width={0}
+              height={0}
+              className="w-full h-full"
+            />
+          </div>
         </button>
         {/** New Message */}
         { newMessage !== 0 &&
@@ -143,14 +149,14 @@ Feel free to share your project details, and I'll guide you from there! 😊
           {/** Chat header Container */}
           <div className={`
             absolute top-0 left-0 h-[70px] w-full flex justify-center items-center
-            bg-[#2b2b53] text-[#f3f3f3]
+            bg-[#050322] text-[#f3f3f3]
           `}>
             <p onClick={() => setShowChat(false)} className={`absolute left-10 cursor-pointer`}>X</p>
             <p>Customer Support</p>
           </div>
 
           {/** Messeges container */}
-          <div onClick={(e) => e.stopPropagation()} className="w-full px-5 flex flex-col items-center flex-grow overflow-y-auto pt-2 bg-[#dadaeb] mt-[70px] h-[0]">
+          <div onClick={(e) => e.stopPropagation()} className="w-full px-5 flex flex-col items-center flex-grow overflow-y-auto pt-2 bg-[#e6e6e6] mt-[70px] h-[0]">
             { /** Loop throught the Messages */
             messages.map((message, index) => (
               <div 
@@ -183,15 +189,24 @@ Feel free to share your project details, and I'll guide you from there! 😊
           {/** Input / button container */}
           <form 
           onSubmit={(e) => {e.preventDefault(); handleSubmit()}}
-          className="flex w-full px-3 bg-[#20203a] border-t border-[#161744] py-4">
+          className="flex w-full px-3 bg-[#050322] border-t border-[#161744] py-4">
             <textarea
               value={value}
               onChange={onChange}
               placeholder="Enter question here"
-              className="rounded-[10px] px-3 pt-2 min-h-[40px] flex-1 bg-[#404463] text-[white] flex items-center max-h-[100px]"
+              className="rounded-[10px] px-3 pt-2 flex-1 bg-[#404463] text-[white] flex items-center max-h-[100px] overflow-y-auto resize-none"
+              rows={1}
+              style={{
+                height: 'auto',
+                maxHeight: '100px',
+              }}
+              onInput={(e:any) => {
+                e.target.style.height = 'auto'; // Reset the height to auto to calculate new height
+                e.target.style.height = `${e.target.scrollHeight}px`; // Set height based on scrollHeight
+              }}
             />
             <button
-              className="text-[white] w-[40px] h-[40px] flex justify-center items-center ml-3"
+              className="text-[white] w-[35px] h-[35px] flex justify-center items-center ml-3"
               disabled={loading}
             >
               <Image
