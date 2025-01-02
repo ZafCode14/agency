@@ -10,63 +10,60 @@ const ContactSection = () => {
     <section
       id="contactSection"
       className={`
-        text-gray-50 
-        w-[1200px] max-w-full
         relative
+        flex flex-col items-center px-3
+        w-[1200px] max-w-full pb-20
+        rounded-t-[30px]
+        text-gray-50 bg-[#0D0E15]
       `}
+      style={{
+        WebkitTransform: "translateZ(0)",
+        WebkitBackfaceVisibility: "hidden",
+      }}
     >
-      <div
-        className={`
-          rounded-t-[30px]
-          w-full pb-20
-          flex flex-col items-center px-3
-          bg-[#0D0E15]
-        `}
-      >
-        <h2 className="font-bold text-[32px] mb-5 mt-10 text-white">Contact</h2>
-        <div className="flex justify-center items-center w-full">
-          <form
-            className={`
-              flex flex-col 
-              w-[400px] max-w-full 
-              bg-[#2A6987] backdrop-blur-md text-black
-              px-2 py-5 rounded-md
-            `}
+      <h2 className="font-bold text-[32px] mb-5 mt-10 text-white">Contact</h2>
+      <div className="flex justify-center items-center w-full">
+        <form
+          className={`
+            flex flex-col 
+            w-[400px] max-w-full 
+            bg-[#2A6987] backdrop-blur-md text-black
+            px-2 py-5 rounded-md
+          `}
+        >
+          <p
+            className={`leading-[16px] px-5 text-center mb-5 text-[#E6E9EF]`}
           >
-            <p
-              className={`leading-[16px] px-5 text-center mb-5 text-[#E6E9EF]`}
-            >
-              Leave your contact details and a developer will get in touch soon
-            </p>
-            <input
-              className={inputClassName}
-              placeholder="Name"
-              name="name"
-              autoComplete="true"
-            />
-            <input
-              className={inputClassName}
-              placeholder="Phone"
-              name="phone"
-              autoComplete="true"
-            />
-            <input
-              className={inputClassName}
-              placeholder="Email"
-              name="email"
-              autoComplete="true"
-            />
-            <input
-              className={inputClassName}
-              placeholder="Message"
-              name="message"
-              autoComplete="true"
-            />
-            <div className={`mt-1 w-full flex flex-col`}>
-              <ButtonTwo name="SEND" />
-            </div>
-          </form>
-        </div>
+            Leave your contact details and a developer will get in touch soon
+          </p>
+          <input
+            className={inputClassName}
+            placeholder="Name"
+            name="name"
+            autoComplete="true"
+          />
+          <input
+            className={inputClassName}
+            placeholder="Phone"
+            name="phone"
+            autoComplete="true"
+          />
+          <input
+            className={inputClassName}
+            placeholder="Email"
+            name="email"
+            autoComplete="true"
+          />
+          <input
+            className={inputClassName}
+            placeholder="Message"
+            name="message"
+            autoComplete="true"
+          />
+          <div className={`mt-1 w-full flex flex-col`}>
+            <ButtonTwo name="SEND" />
+          </div>
+        </form>
       </div>
     </section>
   );

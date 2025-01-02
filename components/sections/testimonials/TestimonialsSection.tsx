@@ -2,9 +2,13 @@ import Testimonials from './Testimonials';
 
 export default function TestimonialsSection() {
   return (
-    <section className="w-[1200px] max-w-full h-screen relative" style={{
-      background: 'linear-gradient(to bottom, #0D0E15, #1F405E)'
-    }}>
+    <section className="w-[1200px] max-w-full h-screen relative"
+      style={{
+        background: 'linear-gradient(to bottom, #0D0E15, #1F405E)',
+        WebkitTransform: "translateZ(0)",
+        WebkitBackfaceVisibility: "hidden",
+      }}
+    >
       <div className="absolute top-0 left-0 w-full h-full bg-opacity-80 flex items-center justify-center text-white" style={{
 
       }}>

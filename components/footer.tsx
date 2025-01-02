@@ -6,7 +6,12 @@ function Footer() {
       relative z-10
       w-full h-[30vh]
       text-white bg-[#0D0E15]
-    `}>
+    `}
+      style={{
+        WebkitTransform: "translateZ(0)",
+        WebkitBackfaceVisibility: "hidden",
+      }}
+    >
       <div className={`
         flex flex-col items-center justify-around h-full
         w-[1200px] max-w-full p-5
