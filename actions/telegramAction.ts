@@ -1,7 +1,7 @@
 "use server";
 export const sendMessageToTelegram = async (message: string) => {
   const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-  const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID; // The chat ID or group ID
+  const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
     throw new Error("Telegram bot token or chat ID is not set in environment variables.");

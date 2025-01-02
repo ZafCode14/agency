@@ -26,6 +26,7 @@ Your primary role is to interact with potential clients, understand their needs,
 Here are some key guidelines:
 1. Always aim to guide users toward utilizing the agency’s services for their web and app development needs.
 2. Confirm the accuracy of the user’s information before sharing any details with the team.
+3. Extract needed information for the tools message by message and not all at once, ask questions on by one. avoid numerated quenstions 
 
 Please ensure all communication is polite, helpful, and encouraging. Tailor your responses based on the user's preferences and needs.
 `;
@@ -42,21 +43,38 @@ const createProjectTool = {
         requirements: {
           type: "object",
           properties: {
-            pages: { type: "number", description: "Number of pages required for the website/app" },
-            design: { type: "string", enum: ["basic", "custom", "premium", "none"], description: "Type of design required" },
+            projectDescription: {
+              type: "string",
+              description: "Shor description of the project in mind"
+            },
+            scope: { 
+              type: "string", 
+              description: "The scope of the project, number of pages / sections etc." 
+            },
+            design: { 
+              type: "string", 
+              description: "What type of design required (from basic to premium) or not required" 
+            },
             features: {
               type: "array",
               items: { type: "string" },
               description: "List of features such as authentication, payment gateway, etc.",
             },
-            timeline: { type: "string", description: "Preferred completion time frame" },
-            platform: { type: "string", enum: ["web", "mobile", "both"], description: "Target platform for the project" },
+            userTypes: {
+              type: "array",
+              items: { "type": "string" },
+              description: "Different types of users the app/website will serve (e.g., admin, guest, client)"
+            },
+            timeline: {
+              type: "string", 
+              description: "Preferred completion time frame" 
+            },
+            budget: {
+              type: "string",
+              description: "The project budget in USD (e.g., '500$').",
+            },
           },
-          required: ["pages", "design", "features"],
-        },
-        budget: {
-          type: "string",
-          description: "The project budget in USD (e.g., '500$').",
+          required: ["scope", "design", "features", "userTypes", "timeline", "budget"],
         },
       },
       required: ["name", "email", "requirements"],
@@ -130,17 +148,27 @@ export async function userInput(
 
 // Function to handle the project creation request
 async function handleCreateProject(toolCall: ToolCall) {
-  const { name, email, requirements, budget } = JSON.parse(toolCall.function.arguments);
+  const { name, email, requirements } = JSON.parse(toolCall.function.arguments);
+  if (!name || !email || !requirements) {
+    throw new Error("Invalid input. Please provide all required fields.");
+  }
   const req = `
-    1) pages: ${requirements.pages}
-    2) design: ${requirements.design}
-    3) features: ${requirements.features}
-    4) timeline: ${requirements.timeline}
-    5) platform: ${requirements.platform}
+    Project Description: ${requirements.projectDescription}
+
+    1. scope: ${requirements.scope}
+    2. design: ${requirements.design}
+    3. features: ${requirements.features}
+    4. userTypes: ${requirements.userTypes}
+    5. budget: ${requirements.budget}
+    6. timeline: ${requirements.timeline}
   `;
+
+  console.log(req);
 
   // Get the estimated price based on the requirements
   const estimatedPrice = await getPrice(req);
+
+  console.log("got estimated Price");
 
   const totalPrice = estimatedPrice.split(" ").pop();
   const estimatedTime = estimatedPrice.split("|")[0];
@@ -151,9 +179,9 @@ async function handleCreateProject(toolCall: ToolCall) {
 New Project Request:
   Name: ${name}
   Email: ${email}
-  Requirements: ${req}
-  Budget: ${budget || "Not provided"}
-  Estimated Price: ${estimatedPrice}
+
+      Requirements: ${req}
+      Estimated Price: ${estimatedPrice}
 `;
 
   await sendMessageToTelegram(telegramMessage);
