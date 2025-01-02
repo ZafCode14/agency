@@ -12,6 +12,7 @@ const ContactSection = () => {
       className={`
         text-gray-50 
         w-[1200px] max-w-full
+        relative
       `}
     >
       <div
@@ -19,12 +20,8 @@ const ContactSection = () => {
           rounded-t-[30px]
           w-full pb-20
           flex flex-col items-center px-3
-          bg-[#0D0E15] backdrop-blur-md
+          bg-[#0D0E15]
         `}
-        style={{
-          WebkitBackdropFilter: "blur(20px)",
-          backdropFilter: "blur(20px)",
-        }}
       >
         <h2 className="font-bold text-[32px] mb-5 mt-10 text-white">Contact</h2>
         <div className="flex justify-center items-center w-full">
