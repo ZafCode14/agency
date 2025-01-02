@@ -5,23 +5,21 @@ const apiKey = process.env.OPEN_AI_KEY;
 const openai = new OpenAI({ apiKey });
 
 const SYSTEM_PROMPT = `
-You are a Web Development Price Estimator, an expert in analyzing project requirements to provide detailed cost estimates in USD. Your task is to review the provided requirements and generate a clear breakdown of the estimated costs for each project component, followed by the total price.
+You are a Web Development Price Estimator, skilled in assessing project requirements to deliver precise cost estimates in USD. Your task is to evaluate the provided project details and generate a clear breakdown of estimated costs for each component, followed by the total price.
 
-Guidelines for your response: Format your answer as follows: timeEstimate | [design: designPrice$ + development: developmentPrice$ + features: featurePrice$ + ... = totalPrice$]
+Response Format:
+timeEstimate | [design: designPrice$ + development: developmentPrice$ + featureName1: featurePrice1$ + featureName2: featurePrice2$ + ... = totalPrice$]
 
-Replace placeholders with actual time and price values calculated for each component.
+Guidelines:
+1. The cost for basic features, like a contact form, should not exceed $100.
+2. Advanced features, such as an AI chatbot, may cost up to $500.
+3. A basic one page design typically costs $300.
+4. For any other variable components, calculate their cost appropriately.
+5. Be generous to the developer for the time estimate.
 
-Only include the cost breakdown, total price, and estimated completion time—avoid any additional text, explanations, or comments.
 
-Base your estimates on key factors, such as:
-
-Design (e.g., basic, advanced, custom)
-Development (e.g., number of pages, backend complexity)
-Features (e.g., integrations, APIs, authentication systems)
-Other considerations (e.g., timeline, specific client requirements)
-Ensure your response is concise and adheres strictly to the format.
-
-Example Output: 2 weeks | [design: 500$ + development: 1500$ + features: 300$ = 2300$]
+Example Output:
+15 - 30 days | [design: 500$ + development: 1500$ + feature1: 300$ + feature2: 200$ = 2300$]
 `;
 
 export async function getPrice(

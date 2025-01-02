@@ -2,6 +2,7 @@
 import OpenAI from "openai";
 import { sendMessageToTelegram } from "./telegramAction";
 import { getPrice } from "./getPriceAction";
+import { sendEmail } from "./emailAction";
 
 const apiKey = process.env.OPEN_AI_KEY;
 const openai = new OpenAI({ apiKey });
@@ -175,7 +176,7 @@ async function handleCreateProject(toolCall: ToolCall) {
 
   // Send message to Telegram
   // Prepare the message for Telegram
-  const telegramMessage = `
+  const message = `
 New Project Request:
   Name: ${name}
   Email: ${email}
@@ -184,7 +185,8 @@ New Project Request:
       Estimated Price: ${estimatedPrice}
 `;
 
-  await sendMessageToTelegram(telegramMessage);
+  //await sendMessageToTelegram(message);
+  await sendEmail(message);
 
   return `Thank you for sharing your project details with our development team!
 
@@ -203,7 +205,7 @@ async function handleContactDeveloper(toolCall: ToolCall) {
   const { name, email, phone, message } = JSON.parse(toolCall.function.arguments);
 
   // Prepare the message for Telegram
-  const telegramMessage = `
+  const msg = `
 New Message:
   Name: ${name}
   Email: ${email}
@@ -212,7 +214,8 @@ New Message:
 `;
 
   // Send message to Telegram
-  await sendMessageToTelegram(telegramMessage);
+  //await sendMessageToTelegram(msg);
+  await sendEmail(msg);
 
   return `Your message has been successfully sent to our development team.
   They will review your message and reach out to you shortly.
