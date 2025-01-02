@@ -7,11 +7,11 @@ import Chat from "@/components/ChatBot";
 
 const mulish = Mulish({
   subsets: ["latin"],
-  weight: ["400", "600", "700"], // Specify the weights you need
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Web Creator",
+  title: "Etavelle",
   description: "Create Amazing Websites",
 };
 
@@ -25,7 +25,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo2.svg" />
       </head>
-      <body className={`${mulish.className} relative`} suppressHydrationWarning={true}>
+      <body className={`${mulish.className}`} suppressHydrationWarning={true}>
         <Header />
         {children}
         <Footer />

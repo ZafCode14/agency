@@ -18,7 +18,7 @@ const ContactSection = () => {
         className={`
           rounded-t-[30px]
           w-full pb-20
-          flex flex-col items-center right-0 px-3
+          flex flex-col items-center px-3
           bg-[#0D0E15] backdrop-blur-md
         `}
         style={{

@@ -96,11 +96,11 @@ Feel free to share your project details, and I'll guide you from there! 😊
   }, [showChat]);
 
   return (
-    <div className={`flex items-end z-30`}>
+    <div className={`flex items-end`}>
       {/** Show Hide Chat button */}
       <>
         <button onClick={() => {setShowChat(true); setNewMessage(0)}} className={`
-          fixed bottom-10 right-10
+          fixed bottom-10 right-10 z-20
           flex justify-center items-center
           w-[50px] h-[50px] rounded-full
           bg-gradient-6
@@ -115,14 +115,14 @@ Feel free to share your project details, and I'll guide you from there! 😊
               src="/icons/chat.svg"
               width={0}
               height={0}
-              className="w-full h-full"
+              className="w-[70%] h-[70%]"
             />
           </div>
         </button>
         {/** New Message */}
         { newMessage !== 0 &&
           <p onClick={() => {setShowChat(true)}} className={`
-            fixed bottom-[70px] right-[70px]
+            fixed bottom-[70px] right-[70px] z-20
             flex justify-center items-center
             w-[18px] h-[18px] rounded-full
             bg-[#ff0202] text-[white]
