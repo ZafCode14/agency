@@ -175,24 +175,16 @@ async function handleCreateProject(toolCall: ToolCall) {
     throw new Error("Invalid input. Please provide all required fields.");
   }
   const req = `
-    <div>
-      <strong>Project Description:</strong> ${requirements.projectDescription}
+    Project Description: ${requirements.projectDescription}
 
-      <ol>
-        <li>
-          <strong>Scope:</strong>
-          <ul>
-            <li>Pages: ${requirements.scope.pages}</li>
-            <li>Sections: ${requirements.scope.sections}</li>
-          </ul>
-        </li>
-        <li><strong>Design:</strong> ${requirements.design}</li>
-        <li><strong>Features:</strong> ${requirements.features}</li>
-        <li><strong>User Types:</strong> ${requirements.userTypes}</li>
-        <li><strong>Budget:</strong> ${requirements.budget}</li>
-        <li><strong>Timeline:</strong> ${requirements.timeline}</li>
-      </ol>
-    </div>
+    1. scope: 
+        - pages: ${requirements.scope.pages}
+        - sections: ${requirements.scope.sections}
+    2. design: ${requirements.design}
+    3. features: ${requirements.features}
+    4. userTypes: ${requirements.userTypes}
+    5. budget: ${requirements.budget}
+    6. timeline: ${requirements.timeline}
   `;
 
   console.log(req);
@@ -202,33 +194,22 @@ async function handleCreateProject(toolCall: ToolCall) {
 
   console.log("got estimated Price");
 
-  const totalPrice = estimatedPrice.split("|")[3];
+  const totalPrice = estimatedPrice.split("|").pop();
   const estimatedTime = estimatedPrice.split("|")[1];
 
   // Send message to Telegram
   // Prepare the message for Telegram
   const message = `
-    <div style="font-family: Arial, sans-serif; line-height: 1.8; background-color: #f7f7f7; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); color: #333;">
-      <h2 style="margin-top: 0; color: #4A90E2;">New Project Request</h2>
-      
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
+New Project Request:
+  Name: ${name}
+  Email: ${email}
 
-      <strong>Requirements:</strong>
-      <div style="padding-top: 20px; padding-left: 20px">
-        ${req}
-      </div>
-
-      <strong>Estimated Price:</strong>
-      <div style="padding-top: 20px; padding-left: 20px">
-        ${estimatedPrice}
-      </div>
-    </div>
-  `;
+      Requirements: ${req}
+      Estimated Price: ${estimatedPrice}
+`;
 
   //await sendMessageToTelegram(message);
   await sendEmail(message);
-  const className = "text-[#5aa3d3]"
   return `Thank you for sharing your project details with our development team!
 
   Here’s an overview based on your provided requirements:

@@ -28,54 +28,45 @@ Objective:
 Offer a balanced and transparent estimate, avoiding overpricing by consolidating minor or trivial elements into broader categories (e.g., design or development costs). Focus on clarity, fairness, and delivering practical insights.
 
 ### **Example Output**:  
-<div>
-  <p><strong>Time Estimate:</strong> <span>| 30 - 60 days |</span></p>
+Time Estimate: | 30 - 60 days |  
 
-  <ol>
-    <li>
-      <strong>Design:</strong>
-      <ul>
-        <li>5 pages: 5 * $100 = $500</li>
-        <li>10 sections: (10 - 5) * $50 = $250</li>
-      </ul>
-    </li>
+1. Design:  
+    - 5 pages (e.g., Home, About, Services, Blog, Contact): 5 * $100 = $500  
+    - Additional sections (10 sections total, minus 5 for main pages): (10 - 5) * $50 = $250  
+    Design Total: $750  
 
-    <li>
-      <strong>Development:</strong>
-      <ul>
-        <li>5 pages: 5 * $100 = $500</li>
-        <li>10 sections: (10 - 5) * $50 = $250</li>
-      </ul>
-    </li>
+2. Development:  
+    - 5 pages: 5 * $100 = $500  
+    - Additional sections: (10 - 5) * $50 = $250  
+    Development Total: $750  
 
-    <li>
-      <strong>Features:</strong>
-      <ul>
-        <li>AI Chatbot: $500</li>
-        <li>Contact Form with Validation: $100</li>
-        <li>Image Gallery: $100</li>
-        <li>Authentication (Sign-up, Login): $200</li>
-        <li>Admin Dashboard for CRUD operations: $300</li>
-        <li>E-commerce functionality: $800</li>
-        <li>Payment Gateway Integration: $300</li>
-        <li>Blog Management System: $300</li>
-        <li>Responsive Design Testing: $100</li>
-      </ul>
-    </li>
-  </ol>
+3. Features:  
+    - AI Chatbot: $500  
+    - Contact Form with Validation: $100  
+    - Image Gallery: $100  
+    - Authentication (Sign-up, Login): $200  
+    - Admin Dashboard for CRUD operations: $300  
+    - E-commerce functionality: $800  
+    - Payment Gateway Integration: $300  
+    - Blog Management System: $300  
+    - Responsive Design Testing: $100  
+    Features Total: $2,700  
 
-  <hr />
+4. Optional Services (if requested):  
+    - SEO Optimization: $300  
+    - Deployment and Hosting Setup: $200  
+    Optional Services Total: $500  
 
-  <p>
-    <strong>Grand Total:</strong><br>
-    <strong>Design:</strong> $750<br>
-    <strong>Development:</strong> $750<br>
-    <strong>Features:</strong> $2,700<br>
-    <strong>Overall Total:</strong> <span>| $4,700 |</span>
-  </p>
-</div>
+---
 
-The format and calculations should be exactly like in the "Example Output" a html element. Don't add any additional text or notes. make sure the output starts with an opening div and ends with a closing div. Make sure you add the "|" in the right place like in the example
+Grand Total:  
+Design: $750  
+Development: $750  
+Features: $2,700  
+Optional Services: $500  
+Overall Total: | $4,700  
+
+The format and calculations should be exactly like in the "Example Output" a html element. Don't add any additional text or notes. make sure the output starts with an opening div and ends with a closing div
 `;
 
 export async function getPrice(
@@ -98,7 +89,7 @@ export async function getPrice(
         },
       ],
       model: "gpt-4o-mini",
-      max_tokens: 500,
+      max_tokens: 300,
     });
 
     return response.choices[0]?.message?.content || "No response received.";
