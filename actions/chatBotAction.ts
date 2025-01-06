@@ -194,7 +194,7 @@ async function handleCreateProject(toolCall: ToolCall) {
 
   console.log("got estimated Price");
 
-  const totalPrice = estimatedPrice.split("|").pop();
+  const totalPrice = estimatedPrice.split("|")[3];
   const estimatedTime = estimatedPrice.split("|")[1];
 
   // Send message to Telegram

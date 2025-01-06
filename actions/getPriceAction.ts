@@ -64,7 +64,7 @@ Design: $750
 Development: $750  
 Features: $2,700  
 Optional Services: $500  
-Overall Total: | $4,700  
+Overall Total: | $4,700 | 
 
 The format and calculations should be exactly like in the "Example Output" a html element. Don't add any additional text or notes. make sure the output starts with an opening div and ends with a closing div
 `;
