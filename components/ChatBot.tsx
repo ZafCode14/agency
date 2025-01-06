@@ -72,7 +72,7 @@ Feel free to share your project details, and I'll guide you from there! 😊
 
   const formatResponse = (text: string) => {
     let formattedText = text.replace(/\n/g, "<br />");
-    formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong style="color: white;">$1</strong>');
     formattedText = formattedText.replace(/\*(.*?)\*/g, "<em>$1</em>");
     return formattedText;
   };
@@ -170,7 +170,7 @@ Feel free to share your project details, and I'll guide you from there! 😊
                   }
                 `}
               >
-                <p dangerouslySetInnerHTML={{ __html: message.content }}/>
+                <p className="leading-[20px]" dangerouslySetInnerHTML={{ __html: message.content }}/>
                 <p className={`text-[10px]`}>
                   {new Date(message.createdAt).toLocaleTimeString('en-US', {
                     hour: '2-digit',

@@ -18,24 +18,31 @@ type ToolCall = {
   };
 };
 
-// Constants
 const SYSTEM_PROMPT = `
-You are Alex, a highly experienced customer support assistant for a development agency specializing in web and app solutions.
+You are Alex, a seasoned customer support assistant for a development agency specializing in web and app solutions.
 
-Your primary role is to interact with potential clients, understand their needs, and assist them using the available tools. Your goal is to ensure that users are fully informed and help them make decisions that best suit their needs. 
+Your primary role is to engage with potential clients, understand their needs, and assist them effectively using the available tools. Your objective is to ensure users are well-informed and guide them toward solutions that best align with their goals, encouraging the use of the agency's services for web and app development.
 
-key guidelines:
-1. Always aim to guide users toward utilizing the agency’s services for their web and app development needs.
-2. Confirm the accuracy of the user’s information before sharing any details with the team.
-3. Extract needed information for the tools message by message and not all at once, ask questions on by one or group 2 question if needed. avoid numerated quenstions 
-4. Only classify as "features" if they involve distinct, additional functionality requiring backend integration or significant development effort. For example, a contact form qualifies as a feature, whereas standard UI elements, static sections, or basic navigation should be included in the project description
-5. When extracting information for the tools, your questions should be to the point and provide example for the answer
+Key Guidelines:
 
-Please ensure all communication is polite, helpful, and encouraging. Tailor your responses based on the user's preferences and needs.
+- Always strive to direct users toward utilizing the agency's services for their development needs.
+
+- Confirm the accuracy of the user's details—such as their name and email—before sharing any information with the team. The confirmaiton should be at the very end right before you send the info to team.
+
+- Gather necessary information incrementally, focusing on one or two questions at a time. Avoid overwhelming users with multiple queries at once.
+
+- Classify as "features" only those functionalities that require backend integration or significant development effort (e.g., a contact form). Standard UI elements, static sections, or basic navigation should be described as part of the overall project.
+
+- Frame questions clearly and concisely, offering examples to guide the user's response. For example:
+    * Instead of asking, "What features do you want?" say, "Could you describe any specific functionality you need, like a contact form or user login?"
+    * Make sure The user right the number of sections needed, esspatially if it's a one page project
+
+Maintain a polite, helpful, and encouraging tone throughout all interactions. Tailor your responses to align with the user's preferences and ensure a positive experience.
 `;
 
-const createProjectTool = {
+const sendProjectDetailsTool = {
   type: "function" as "function",
+  desciption: "Get's user informtation about the project, provides estimated project price and sends info to develpment team",
   function: {
     name: "createProject",
     parameters: {
@@ -48,15 +55,27 @@ const createProjectTool = {
           properties: {
             projectDescription: {
               type: "string",
-              description: "Shor description of the project in mind"
+              description: "Short description of the project in mind"
             },
             scope: { 
-              type: "string", 
+              type: "object", 
+              properties: {
+                pages: {
+                  type: "string",
+                  description: "Number of pages",
+                },
+                sections: {
+                  type: "string",
+                  description: "Overall number of sections in the project"
+                },
+              },
+              required: ["pages", "sections"],
               description: "The scope of the project, number of pages / sections etc." 
             },
             design: { 
               type: "string", 
-              description: "What type of design required (from basic to premium) or not required" 
+              enum: ["required", "not required"],
+              description: "Is the desing required or no" 
             },
             features: {
               type: "array",
@@ -126,7 +145,7 @@ export async function userInput(
       ],
       model: "gpt-4o-mini",
       max_tokens: 300,
-      tools: [createProjectTool, contactDeveloperTool],
+      tools: [sendProjectDetailsTool, contactDeveloperTool],
     });
 
     const toolCalls:ToolCall[] = response.choices[0]?.message.tool_calls || [];
@@ -156,14 +175,24 @@ async function handleCreateProject(toolCall: ToolCall) {
     throw new Error("Invalid input. Please provide all required fields.");
   }
   const req = `
-    Project Description: ${requirements.projectDescription}
+    <div>
+      <strong>Project Description:</strong> ${requirements.projectDescription}
 
-    1. scope: ${requirements.scope}
-    2. design: ${requirements.design}
-    3. features: ${requirements.features}
-    4. userTypes: ${requirements.userTypes}
-    5. budget: ${requirements.budget}
-    6. timeline: ${requirements.timeline}
+      <ol>
+        <li>
+          <strong>Scope:</strong>
+          <ul>
+            <li>Pages: ${requirements.scope.pages}</li>
+            <li>Sections: ${requirements.scope.sections}</li>
+          </ul>
+        </li>
+        <li><strong>Design:</strong> ${requirements.design}</li>
+        <li><strong>Features:</strong> ${requirements.features}</li>
+        <li><strong>User Types:</strong> ${requirements.userTypes}</li>
+        <li><strong>Budget:</strong> ${requirements.budget}</li>
+        <li><strong>Timeline:</strong> ${requirements.timeline}</li>
+      </ol>
+    </div>
   `;
 
   console.log(req);
@@ -173,33 +202,44 @@ async function handleCreateProject(toolCall: ToolCall) {
 
   console.log("got estimated Price");
 
-  const totalPrice = estimatedPrice.split(" ").pop();
-  const estimatedTime = estimatedPrice.split("|")[0];
+  const totalPrice = estimatedPrice.split("|")[3];
+  const estimatedTime = estimatedPrice.split("|")[1];
 
   // Send message to Telegram
   // Prepare the message for Telegram
   const message = `
-New Project Request:
-  Name: ${name}
-  Email: ${email}
+    <div style="font-family: Arial, sans-serif; line-height: 1.8; background-color: #f7f7f7; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); color: #333;">
+      <h2 style="margin-top: 0; color: #4A90E2;">New Project Request</h2>
+      
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
 
-      Requirements: ${req}
-      Estimated Price: ${estimatedPrice}
-`;
+      <strong>Requirements:</strong>
+      <div style="padding-top: 20px; padding-left: 20px">
+        ${req}
+      </div>
+
+      <strong>Estimated Price:</strong>
+      <div style="padding-top: 20px; padding-left: 20px">
+        ${estimatedPrice}
+      </div>
+    </div>
+  `;
 
   //await sendMessageToTelegram(message);
   await sendEmail(message);
-
+  const className = "text-[#5aa3d3]"
   return `Thank you for sharing your project details with our development team!
 
   Here’s an overview based on your provided requirements:
-  1. **Estimated Price**: ${totalPrice?.slice(0, -1)}.
+
+  1. **Estimated Price**: <span style="color: #44be4a">${totalPrice?.slice(0, -1)}</span>.
   2. **Estimated Time**: ${estimatedTime?.slice(0, -1)}.
 
   Our team will review your requirements and get in touch with you shortly.  
 
-  In the meantime, if there’s anything else we can assist you with, please don’t hesitate to let us know.`;
-
+  In the meantime, if there’s anything else we can assist you with, please don’t hesitate to let us know.
+  `;
 }
 
 // Function to handle the contact developer request

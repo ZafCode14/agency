@@ -4,6 +4,7 @@ function Footer() {
   return (
     <footer className={`
       relative z-10
+      flex justify-center
       w-full h-[30vh]
       text-white bg-[#0D0E15]
     `}

@@ -57,7 +57,7 @@ const Project = ({ name, description }: Props) => {
           className={`
             relative
             flex overflow-hidden items-center
-            bg-[#1B2A3A]
+            bg-[#1B2A3A] w-full
           `}
         >
           {Array(4)
@@ -74,9 +74,9 @@ const Project = ({ name, description }: Props) => {
                   transform: `translateX(-${count * 100}%)`,
                 }}
                 className={`
-                  object-contain 
+                  object-cover
                   transition-transform duration-300
-                  flex-shrink-1 w-full
+                  flex-shrink-1 min-w-full h-[43vw] lg:h-[430px]
                 `}
               />
             ))}

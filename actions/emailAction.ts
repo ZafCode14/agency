@@ -22,7 +22,7 @@ export const sendEmail = async (message: string) => {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_RECEIVER,
       subject: "New Message",
-      text: message,
+      html: message,
     };
 
     // Send the email
