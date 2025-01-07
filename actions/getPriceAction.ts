@@ -1,46 +1,26 @@
 "use server";
 import OpenAI from "openai";
 
+type ToolCall = {
+  function: {
+    name: string;
+    arguments: string;
+  };
+};
+
 const apiKey = process.env.OPEN_AI_KEY;
 const openai = new OpenAI({ apiKey });
 
 const SYSTEM_PROMPT = `
-You are a Web Development Price Estimator, skilled in evaluating project requirements to deliver precise and fair cost estimates in USD. Your task is to assess the provided project details and generate a clear breakdown of estimated costs for each component, followed by the total price.
+You are a Web Development Price Estimator, skilled in evaluating project requirements to deliver precise and fair cost estimates in USD. Your task is to use the tools to assess the provided project details and generate a clear breakdown of estimated costs for each component, followed by the total price. Be generouse to the developer and designer for the completion time
 
-Guidelines:
+### **Example Outputs**:  
+Completion Time: 14 - 20 days
 
-- Development Costs:
-  For development, a page with one section (e.g., a Hero Section) costs $100.
-Each additional section on the same page adds $50 to the cost.
+Design: (5pages * $100) + (10sections - 5pages) * $50 = 100$ + (5 * 50$) = $750
+Development: (5pages * $100) + (10sections - 5pages) * $50 = 100$ + (5 * 50$) = $750 
 
-- Design Costs:
-  calculate design only if it is required. Calculation of The design cost is like the development cost
-
-- Feature Pricing:
-Price features separately only if they are complex or distinct (e.g., AI chatbot: up to $500, custom integrations like a contact form: up to $100).
-Avoid splitting minor components into individual prices.
-Adjust complexity pricing based on CRUD operations, assigning fair costs accordingly.
-
-- Time Estimate:
-Provide fair and reasonable time estimates based on project complexity and scope.
-
-Objective:
-Offer a balanced and transparent estimate, avoiding overpricing by consolidating minor or trivial elements into broader categories (e.g., design or development costs). Focus on clarity, fairness, and delivering practical insights.
-
-### **Example Output**:  
-Time Estimate: | 30 - 60 days |  
-
-1. Design:  
-    - 5 pages (e.g., Home, About, Services, Blog, Contact): 5 * $100 = $500  
-    - Additional sections (10 sections total, minus 5 for main pages): (10 - 5) * $50 = $250  
-    Design Total: $750  
-
-2. Development:  
-    - 5 pages: 5 * $100 = $500  
-    - Additional sections: (10 - 5) * $50 = $250  
-    Development Total: $750  
-
-3. Features:  
+Features:  
     - AI Chatbot: $500  
     - Contact Form with Validation: $100  
     - Image Gallery: $100  
@@ -52,22 +32,37 @@ Time Estimate: | 30 - 60 days |
     - Responsive Design Testing: $100  
     Features Total: $2,700  
 
-4. Optional Services (if requested):  
-    - SEO Optimization: $300  
-    - Deployment and Hosting Setup: $200  
-    Optional Services Total: $500  
+Total: design + development + features = $4,700
 
----
-
-Grand Total:  
-Design: $750  
-Development: $750  
-Features: $2,700  
-Optional Services: $500  
-Overall Total: | $4,700 | 
-
-The format and calculations should be exactly like in the "Example Output" a html element. Don't add any additional text or notes. make sure the output starts with an opening div and ends with a closing div
+make sure the variable output format passed to the tools are exactly like in the example provided especially the design and development. the total is just the total not a fromula. Make sure you calculate the total correctly
 `;
+
+const outputParameters = {
+  type: "function" as "function",
+  function: {
+    name: "contactDeveloper",
+    parameters: {
+      type: "object",
+      properties: {
+        timeline: { type: "string", description: "timeline in days" },
+        design: { type: "string", description: "design price" },
+        development: { type: "string", description: "development price" },
+        features: {
+          type: "array",
+          description: "list of features and their prices",
+          items: {
+            type: "object",
+            properties: {
+              name: { type: "string", description: "name of the feature" },
+              price: { type: "string", description: "price of the feature" }
+            }
+          }
+        },
+        total: { type: "string", description: "total price" }
+      },
+    },
+  },
+}
 
 export async function getPrice(
   input: string,
@@ -90,9 +85,13 @@ export async function getPrice(
       ],
       model: "gpt-4o-mini",
       max_tokens: 300,
+      tools: [outputParameters],
     });
 
-    return response.choices[0]?.message?.content || "No response received.";
+    const toolCalls:ToolCall[] = response.choices[0]?.message.tool_calls || [];
+    console.log(toolCalls);
+
+    return toolCalls[0] || "No response received.";
   } catch (error) {
     console.error(error);
     throw new Error("Something went wrong. Please try again later.");

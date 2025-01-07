@@ -25,6 +25,8 @@ Your primary role is to engage with potential clients, understand their needs, a
 
 Key Guidelines:
 
+- DO NOT SOUND LIKE AI!!
+
 - Always strive to direct users toward utilizing the agency's services for their development needs.
 
 - Confirm the accuracy of the user's details—such as their name and email—before sharing any information with the team. The confirmaiton should be at the very end right before you send the info to team.
@@ -82,21 +84,8 @@ const sendProjectDetailsTool = {
               items: { type: "string" },
               description: "List of features such as authentication, payment gateway, etc.",
             },
-            userTypes: {
-              type: "array",
-              items: { "type": "string" },
-              description: "Different types of users the app/website will serve (e.g., admin, guest, client)"
-            },
-            timeline: {
-              type: "string", 
-              description: "Preferred completion time frame" 
-            },
-            budget: {
-              type: "string",
-              description: "The project budget in USD (e.g., '500$').",
-            },
           },
-          required: ["scope", "design", "features", "userTypes", "timeline", "budget"],
+          required: ["scope", "design", "features"],
         },
       },
       required: ["name", "email", "requirements"],
@@ -190,22 +179,27 @@ async function handleCreateProject(toolCall: ToolCall) {
   console.log(req);
 
   // Get the estimated price based on the requirements
-  const estimatedPrice = await getPrice(req);
+  const priceToolCall = await getPrice(req);
 
   console.log("got estimated Price");
 
-  const totalPrice = estimatedPrice.split("|")[3];
-  const estimatedTime = estimatedPrice.split("|")[1];
+  const { total, design, development, features, timeline } = JSON.parse(priceToolCall.function.arguments);
+  const estimatedTime = timeline;
 
   // Send message to Telegram
   // Prepare the message for Telegram
   const message = `
 New Project Request:
-  Name: ${name}
-  Email: ${email}
+\tName: ${name}
+\tEmail: ${email}
 
-      Requirements: ${req}
-      Estimated Price: ${estimatedPrice}
+\tTimeline: ${timeline}
+\tPricing:
+\t\tDesign: ${design}
+\t\tDevelopment: ${development}
+\t\tFeatures: ${features.map((feature:any) => `
+\t\t\t${feature.name}: ${feature.price}`)}
+\t\tEstimated Price: ${total}
 `;
 
   //await sendMessageToTelegram(message);
@@ -214,8 +208,8 @@ New Project Request:
 
   Here’s an overview based on your provided requirements:
 
-  1. **Estimated Price**: <span style="color: #44be4a">${totalPrice?.slice(0, -1)}</span>.
-  2. **Estimated Time**: ${estimatedTime?.slice(0, -1)}.
+  1. **Estimated Price**: <span style="color: #44be4a">${total}</span>.
+  2. **Estimated Time**: ${estimatedTime}.
 
   Our team will review your requirements and get in touch with you shortly.  
 
