@@ -171,9 +171,6 @@ async function handleCreateProject(toolCall: ToolCall) {
         - sections: ${requirements.scope.sections}
     2. design: ${requirements.design}
     3. features: ${requirements.features}
-    4. userTypes: ${requirements.userTypes}
-    5. budget: ${requirements.budget}
-    6. timeline: ${requirements.timeline}
   `;
 
   console.log(req);
@@ -184,7 +181,6 @@ async function handleCreateProject(toolCall: ToolCall) {
   console.log("got estimated Price");
 
   const { total, design, development, features, timeline } = JSON.parse(priceToolCall.function.arguments);
-  const estimatedTime = timeline;
 
   // Send message to Telegram
   // Prepare the message for Telegram
@@ -209,7 +205,7 @@ New Project Request:
   Here’s an overview based on your provided requirements:
 
   1. **Estimated Price**: <span style="color: #44be4a">${total}</span>.
-  2. **Estimated Time**: ${estimatedTime}.
+  2. **Estimated Time**: ${timeline}.
 
   Our team will review your requirements and get in touch with you shortly.  
 
