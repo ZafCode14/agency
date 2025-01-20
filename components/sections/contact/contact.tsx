@@ -1,3 +1,6 @@
+'use client';
+import { useState } from "react";
+import { sendEmail } from "@/actions/emailAction";
 import ButtonTwo from "@/components/ButtonTwo";
 
 const ContactSection = () => {
@@ -6,9 +9,60 @@ const ContactSection = () => {
     placeholder:text-[#A6BBCD] bg-[#151727] text-white
   `;
 
+  // State to capture form input values
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
+  // Handle input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission
+  const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent page reload
+
+    const { name, phone, email, message } = formData;
+
+    // Prepare email content (you can customize this format as needed)
+    const emailContent = `
+      Name: ${name}
+      Phone: ${phone}
+      Email: ${email}
+      Message: ${message}
+    `;
+
+    try {
+      // Call the sendEmail function with the content
+      const response = await sendEmail(emailContent);
+
+      // Show success message
+      alert("Your message has been sent successfully!");
+
+      // Clear the form inputs after successful email send
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error sending email", error);
+      // Optionally, show an error message
+      alert("There was an error sending your message. Please try again.");
+    }
+  };
+
   return (
     <section
-      id="contactSection"
       className={`
         relative
         flex flex-col items-center px-3
@@ -24,6 +78,7 @@ const ContactSection = () => {
       <h2 className="font-bold text-[32px] mb-5 mt-10 text-white">Contact</h2>
       <div className="flex justify-center items-center w-full">
         <form
+          onSubmit={handleSend} // Attach form submit handler
           className={`
             flex flex-col 
             w-[400px] max-w-full 
@@ -40,25 +95,34 @@ const ContactSection = () => {
             className={inputClassName}
             placeholder="Name"
             name="name"
-            autoComplete="true"
+            value={formData.name}
+            onChange={handleChange}
+            required
           />
           <input
             className={inputClassName}
             placeholder="Phone"
             name="phone"
-            autoComplete="true"
+            value={formData.phone}
+            onChange={handleChange}
+            required
           />
           <input
             className={inputClassName}
             placeholder="Email"
             name="email"
-            autoComplete="true"
+            value={formData.email}
+            onChange={handleChange}
+            type="email"
+            required
           />
-          <input
-            className={inputClassName}
+          <textarea
+            className={`${inputClassName} h-[100px]`}
             placeholder="Message"
             name="message"
-            autoComplete="true"
+            value={formData.message}
+            onChange={handleChange}
+            required
           />
           <div className={`mt-1 w-full flex flex-col`}>
             <ButtonTwo name="SEND" />

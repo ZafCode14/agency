@@ -138,7 +138,6 @@ export async function userInput(
     });
 
     const toolCalls:ToolCall[] = response.choices[0]?.message.tool_calls || [];
-    console.log(toolCalls);
 
     if (toolCalls.length > 0) {
       for (const toolCall of toolCalls) {
@@ -173,12 +172,8 @@ async function handleCreateProject(toolCall: ToolCall) {
     3. features: ${requirements.features}
   `;
 
-  console.log(req);
-
   // Get the estimated price based on the requirements
   const priceToolCall = await getPrice(req);
-
-  console.log("got estimated Price");
 
   const { total, design, development, features, timeline } = JSON.parse(priceToolCall.function.arguments);
 

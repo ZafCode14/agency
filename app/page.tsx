@@ -45,7 +45,7 @@ export default function Home() {
         name="zeus"
         description="Zeus Gym is a modern fitness center dedicated to health and wellness. Offering state-of-the-art equipment, expert trainers, and tailored programs, Zeus provides an inspiring workout environment. The brand emphasizes community, motivation, and helping members achieve their fitness goals."
       />
-      <div className="h-[100px]"></div>
+      <div id="contactSection" className="h-[70px]"></div>
       <ContactSection/>
       <TestimonialsSection/>
     </main>

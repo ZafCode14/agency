@@ -8,7 +8,7 @@ export default function ButtonTwo({ name }: {name: string}) {
         setHoverButton(!hoverButton);
     }
   return (
-    <button className={`
+    <button type="submit" className={`
         relative 
         text-[#ffffff] 
         bg-gradient-4

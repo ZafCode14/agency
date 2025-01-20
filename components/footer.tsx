@@ -33,27 +33,15 @@ function Footer() {
           <a>Contact</a>
         </div>
         <div className="flex w-full">
-          <Image 
-            src={"/icons/linkedin.svg"} 
-            alt={"Logo"} 
-            width={0} 
-            height={0} 
-            className="w-2 h-2" 
-          />
-          <Image 
-            src={"/icons/facebook.svg"} 
-            alt={"Logo"} 
-            width={0} 
-            height={0} 
-            className="w-2 h-2 mx-4" 
-          />
-          <Image 
-            src={"/icons/instagram.svg"} 
-            alt={"Logo"} 
-            width={0} 
-            height={0} 
-            className="w-2 h-2" 
-          />
+          <a href="https://www.linkedin.com/in/misha-zafarani" target="_blank" rel="noopener noreferrer">
+            <Image 
+              src={"/icons/linkedin.svg"} 
+              alt={"Logo"} 
+              width={0} 
+              height={0} 
+              className="w-2 h-2" 
+            />
+          </a>
         </div>
       </div>
     </footer>
