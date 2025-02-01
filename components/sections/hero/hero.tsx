@@ -34,9 +34,9 @@ const HeroSection = () => {
       `}>
         <h1 className="relative text-center font-bold leading-snug text-[#e0e0e0] text-[26px] md:text-[34px] max-w-25">Elevate Your Business</h1>
         <p className="relative w-full max-w-35 text-center mb-5 text-[#aeb4d6] text-[16px]">All Your Tech Needs In One Place</p>
-        <div className={`w-[200px] flex flex-col`}>
+        <a href="#contactSection" className={`w-[200px] flex flex-col`}>
           <ButtonOne name={"CONTACT"} />
-        </div>
+        </a>
       </div>
     </section>
   );
