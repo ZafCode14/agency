@@ -26,20 +26,20 @@ const ServicesSection = () => {
           index={0}
           />
           <Service
-          title="Responsive Web Design"
-          description="Design websites that seamlessly adapt to various screen sizes and devices, ensuring optimal user experience"
-          services={services}
-          setServices={setServices}
-          icon="/icons/services/responsive.svg"
-          index={1}
-          />
-          <Service
-          title="Custom Web Development"
+          title="Web Development"
           description="Develop unique and tailored web solutions that meet your specific requirements and business goals"
           icon="/icons/services/custom.svg"
           services={services}
           setServices={setServices}
           index={2}
+          />
+          <Service
+          title="App Development"
+          description="Build high-performance mobile applications tailored to your needs, ensuring seamless functionality."
+          services={services}
+          setServices={setServices}
+          icon="/icons/services/responsive.svg"
+          index={1}
           />
           <Service
           title="SEO Services"
@@ -50,20 +50,20 @@ const ServicesSection = () => {
           index={3}
           />
           <Service
-          title="CMS Services"
-          description="Implement user-friendly content management systems to easily manage and update website content"
-          icon="/icons/services/cms.svg"
-          services={services}
-          setServices={setServices}
-          index={4}
-          />
-          <Service
           title="Maintenance and Support"
           description="Provide ongoing support, updates, and maintenance to ensure websites remain functional and up-to-date"
           icon="/icons/services/maintenance.svg"
           services={services}
           setServices={setServices}
           index={5}
+          />
+          <Service
+          title="Hosting"
+          description="Secure, reliable, and high-performance hosting solutions to keep your website running smoothly with minimal downtime."
+          icon="/icons/services/cms.svg"
+          services={services}
+          setServices={setServices}
+          index={4}
           />
         </div>
       </div>

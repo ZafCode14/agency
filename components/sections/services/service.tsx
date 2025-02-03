@@ -25,10 +25,10 @@ const Service: React.FC<Props> = ({ title, description, icon, services, setServi
         flex flex-col items-center
         rounded-xl
         bg-gradient-5
-        m-1 w-full md:w-22 px-2 py-4
+        m-1 w-full md:w-22 px-2 py-2
       `}
       style={{
-        height: services[index] ? "160px" : w > 767 ? "160px" : "70px",
+        height: services[index] ? "140px" : w > 767 ? "140px" : "50px",
         transition: ".5s ease"
       }}
     >
